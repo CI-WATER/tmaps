@@ -1,0 +1,39 @@
+{
+    "datasets": [
+        {
+            "id": "crf24-3fps-1708x960",
+            "name": "720p"
+        }
+    ],
+    "sizes": [
+        "720p"
+    ],
+    "capture-times": [
+        "Output Time: 0.0",
+        "Output Time: 3600.27035",
+        "Output Time: 7205.951047",
+        "Output Time: 10801.381917",
+        "Output Time: 14404.059154",
+        "Output Time: 18003.784952",
+        "Output Time: 21601.694575",
+        "Output Time: 25200.119395",
+        "Output Time: 28802.555321",
+        "Output Time: 32403.965296",
+        "Output Time: 36002.384251",
+        "Output Time: 39602.614215",
+        "Output Time: 43202.418788",
+        "Output Time: 46804.176836",
+        "Output Time: 50404.65631",
+        "Output Time: 54001.03487",
+        "Output Time: 57605.217615",
+        "Output Time: 61200.947122",
+        "Output Time: 64801.812152",
+        "Output Time: 68400.216281"
+    ],
+    "projection-bounds": {
+        "east": 180.00002977395505,
+        "north": 85.05112877980659,
+        "south": -85.05113134830793,
+        "west": -180.00000000000003
+    }
+}
