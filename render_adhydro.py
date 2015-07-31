@@ -35,7 +35,7 @@ time_start = datetime.now()
 
 class Adhydro_Render:
     
-    def __init__(self, parameter, contour, opacityofmesh, start_frame, end_frame):
+    def __init__(self, adhydro_output_dir, parameter, contour, opacityofmesh, start_frame, end_frame):
         """
         The class parses through the netcdf output of ADHydro through the use of
         the xmf that can be generated using the post processing code for ADHydro.
@@ -45,7 +45,14 @@ class Adhydro_Render:
         """
         self.input_dir = 'geometry.nc'
         self.parinput_dir = 'display.nc'
+        self.adhydro_output_dir = adhydro_output_dir
         self.parameter = parameter
+        
+        self.input_dir = adhydro_output_dir + '/' + self.input_dir
+        self.parinput_dir = adhydro_output_dir + '/' + self.parinput_dir
+        print self.input_dir
+        print self.parinput_dir
+        
         self.netcdfgeo = netCDF4.Dataset(self.input_dir)
         self.netcdfpar = netCDF4.Dataset(self.parinput_dir)
 
@@ -165,7 +172,7 @@ class Adhydro_Render:
         # Render and export the images from each time step of the data set
         # There are piecewise functions to define what data set will be viewed out of the XDMF file and the max and min bounds for contour display
         # Notice that the XDMFReader is being used to interpret the input files since this was developed to originally handl ADHydro ouput.
-        mesh_display_xmf = XDMFReader( guiName="mesh_display.xmf", FileName='./mesh_display.xmf')
+        mesh_display_xmf = XDMFReader( guiName="mesh_display.xmf", FileName=self.adhydro_output_dir+'/mesh_display.xmf')
         ##Here it is being determined how many time steps there are in order to extract all these as images later
         tsteps = mesh_display_xmf.TimestepValues
     
