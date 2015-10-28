@@ -35,7 +35,7 @@ time_start = datetime.now()
 
 class Adhydro_Render:
     
-    def __init__(self, adhydro_output_dir, parameter, contour, opacityofmesh, start_frame, end_frame):
+    def __init__(self, parameter, contour, opacityofmesh, start_frame, end_frame):
         """
         The class parses through the netcdf output of ADHydro through the use of
         the xmf that can be generated using the post processing code for ADHydro.
@@ -45,14 +45,7 @@ class Adhydro_Render:
         """
         self.input_dir = 'geometry.nc'
         self.parinput_dir = 'display.nc'
-        self.adhydro_output_dir = adhydro_output_dir
         self.parameter = parameter
-        
-        self.input_dir = adhydro_output_dir + '/' + self.input_dir
-        self.parinput_dir = adhydro_output_dir + '/' + self.parinput_dir
-        print self.input_dir
-        print self.parinput_dir
-        
         self.netcdfgeo = netCDF4.Dataset(self.input_dir)
         self.netcdfpar = netCDF4.Dataset(self.parinput_dir)
 
@@ -172,7 +165,7 @@ class Adhydro_Render:
         # Render and export the images from each time step of the data set
         # There are piecewise functions to define what data set will be viewed out of the XDMF file and the max and min bounds for contour display
         # Notice that the XDMFReader is being used to interpret the input files since this was developed to originally handl ADHydro ouput.
-        mesh_display_xmf = XDMFReader( guiName="mesh_display.xmf", FileName=self.adhydro_output_dir+'/mesh_display.xmf')
+        mesh_display_xmf = XDMFReader( guiName="mesh_display.xmf", FileName='./mesh_display.xmf')
         ##Here it is being determined how many time steps there are in order to extract all these as images later
         tsteps = mesh_display_xmf.TimestepValues
     
@@ -435,7 +428,6 @@ class Adhydro_Render:
             WriteImage("images/" + str(tstepsnum) +".png", Magnification=10)
             print("Image " + str(framenum) + "/" + str(total_frames) + " was exctracted: " + str(round((framenum)/float(total_frames)*100, 2)) + "% of images rendered.")
         else:
-            RenderView1.Background = [0, 1, 0]
             DataRepresentation1.Opacity = 0
             ScalarBarWidgetRepresentation1 = CreateScalarBar( TextPosition=1, Title=titletype, Position2=[0.1299999999999999, 0.5], TitleOpacity=1.0, TitleFontSize=12, NanAnnotation='NaN', TitleShadow=1, AutomaticLabelFormat=1, DrawAnnotations=1, TitleColor=[1.0, 1.0, 1.0], AspectRatio=15.0, NumberOfLabels=10, ComponentTitle='', Resizable=1, DrawNanAnnotation=0, TitleFontFamily='Arial', Visibility=1, LabelFontSize=10, LabelFontFamily='Arial', TitleItalic=0, LabelBold=1, LabelItalic=0, Enabled=1, LabelColor=[1.0, 1.0, 1.0], Position=[0.8141469013006885, 0.37274368231046917], Selectable=0, UseNonCompositedRenderer=1, LabelOpacity=0.9, TitleBold=0, LabelFormat='%-#6.3g', Orientation='Vertical', LabelShadow=0, LookupTable=pvlookup, Repositionable=1 )
             GetRenderView().Representations.append(ScalarBarWidgetRepresentation1)
