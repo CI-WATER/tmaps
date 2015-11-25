@@ -73,8 +73,8 @@ def getbasemap(project_proj, xmin, xmax, ymin, ymax):
     resy = 3816
     
     #The buffer ration of the national map
-    bufx = 1.25
-    bufy = 1
+    bufx = 0.75
+    bufy = 0.6
     
     mapxmin = outpoint[0] - (outpoint2[0]-outpoint[0])*bufx
     mapxmax = outpoint2[0] + (outpoint2[0]-outpoint[0])*bufx
@@ -194,7 +194,7 @@ def runtrim_nomap(args):
     
     fname = args[0]
     opacity = args[1]
-    print args
+
     im = Image.open(fname)
     im = trim(im)
     im = im.convert("RGBA")
@@ -205,6 +205,8 @@ def runtrim_nomap(args):
 				pixdata[x, y] = (0, 0, 0, 255)
             if fname == './images/legend.png' and pixdata[x, y] == (0,0,0,255):
                     pixdata[x, y] = (0,0,0,0)
+            elif fname == './images/legend.png' and pixdata[x, y] == (255,255,128,255):
+                pixdata[x, y] = (0,0,0,0)
             elif fname == './images/legend.png':
                 pass
             elif pixdata[x, y][3] == 255:

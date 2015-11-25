@@ -432,8 +432,13 @@ class Adhydro_Render:
             Render()
             
             framenum = framenum+1
-            WriteImage("images/" + str(tstepsnum) +".png", Magnification=10)
-            print("Image " + str(framenum) + "/" + str(total_frames) + " was exctracted: " + str(round((framenum)/float(total_frames)*100, 2)) + "% of images rendered.")
+            #use if so that the filename will sort numerical instead of not being organized by name with single digits
+            if tstepsnum > 0 and tstepsnum < 10:
+                WriteImage("images/0" + str(tstepsnum) +".png", Magnification=10)
+                print("Image " + str(framenum) + "/" + str(total_frames) + " was exctracted: " + str(round((framenum)/float(total_frames)*100, 2)) + "% of images rendered.")
+            else:
+                WriteImage("images/" + str(tstepsnum) +".png", Magnification=10)
+                print("Image " + str(framenum) + "/" + str(total_frames) + " was exctracted: " + str(round((framenum)/float(total_frames)*100, 2)) + "% of images rendered.")
         else:
             RenderView1.Background = [0, 1, 0]
             DataRepresentation1.Opacity = 0
@@ -491,8 +496,17 @@ class Adhydro_Render:
             
         print("You can find specific information about the output in the adhydro_frames_info.txt")
 
+    def tmaps_app_file(self, tm_name):
+        '''
+        Used to generated the tmaps_info_app.txt that identifies the TMAPS metadata for the TMAPS Tethys app
+        '''
 
- 
+        file = open('./tmaps_app_info.txt','w')
+        file.write(tm_name+" "+self.parameter+" "+time.strftime("%Y-%m-%d %H:%M"))
+        file.close()
+
+        return
+
 
 
     

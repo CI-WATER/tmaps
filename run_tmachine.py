@@ -44,11 +44,11 @@ def runtm(cores, tmcname, tmc_ct_dir, mapxmin, mapxmax, mapymin, mapymax):
       "type": "h.264",
       "label": "720p",
       "size": [
-        1280,
+        1256,
         720
       ],
-      "compression": 24,
-      "fps": "3"
+      "quality": 24,
+      "fps": "4"
     }
   ]
 }''')        
@@ -81,7 +81,10 @@ def runtm(cores, tmcname, tmc_ct_dir, mapxmin, mapxmax, mapymin, mapymax):
     except :
         print('There is not a legend image to be overlain onto the viewer. Please place a legend.png with dimensions 235x581 in the two directories up from the tmc_ct_dir')
         sys.exit(0)
-    
+
+    for name in os.listdir('./' + tmcname + '.timemachine/'):
+        if 'crf' in name:
+            video_tile_folder = name
     
     # generate an updated css file for allowing the updated legend to be visible
     try:
@@ -598,7 +601,7 @@ def runtm(cores, tmcname, tmc_ct_dir, mapxmin, mapxmax, mapymin, mapymax):
         file.write('''{
   "datasets": [
     {
-      "id": "crf24-3fps-1708x960",
+      "id": "'''+str(video_tile_folder)+'''",
       "name": "720p"
     }
   ],
@@ -713,6 +716,12 @@ def runtm(cores, tmcname, tmc_ct_dir, mapxmin, mapxmax, mapymin, mapymax):
     except:
         print('Capture times could not be updated')
         sys.exit(0) # quit Python
+
+    try :
+        shutil.copyfile('../../../tmaps_app_info.txt', 'tmaps_app_info.txt')
+    except :
+        print('No tmaps_info_app.txt found. This means one will need to be placed in the *.timemachine folder before moving it to the Tethys TMAPS app.')
+
     
     print ("Your timemachine video entitled " + tmcname + ".timemachine was created. It can be viewed in your browser by opening " + tmc_ct_dir + "/" + tmcname + ".timemachine/view.html")
     

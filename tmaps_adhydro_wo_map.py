@@ -31,14 +31,23 @@ time_start = datetime.now()
 #------------------------------------------------------------------------------
 #main process
 #------------------------------------------------------------------------------
-    
-output_dir = '/home/nrtaylor/Research/Files_From_MtMoran/Green_River_ADHydro/'
-user_parameter = 'meshSurfacewaterDepth'
-user_contour = 'blueyellowred'
-user_opacity = 1
-start_frame = 0
-end_frame = 2
+#Adjust the following inputs as needed
 
+#output_dir is where the ADHydro output files are located
+output_dir = '/home/nrtaylor/Research/Files_From_MtMoran/Green_River_ADHydro/'
+#user_parameter is the ADHydro output parameter that will be rendered onto the unstructured grid
+user_parameter = 'meshSurfacewaterDepth'
+#Contour options can be found in the render_adhydro module
+user_contour = 'blueyellowred'
+#user_opacity is the opacity of the mesh overlay if using a basemap. If not using a basemap, leave it at 1
+user_opacity = 1
+#Use the output_info of the render_adhydro module to find out how many timesteps there are
+start_frame = 0
+end_frame = 5
+#Name of Time Machine
+tmcname = "test2"
+#Number of cores to use for parallel processing
+cores = 4
 
 
 
@@ -46,6 +55,7 @@ if __name__=="__main__":
 
     runtmaps = render_adhydro.Adhydro_Render(output_dir, user_parameter,user_contour,user_opacity, start_frame, end_frame)
     runtmaps.renderpv()
+    runtmaps.tmaps_app_file(tmcname)
     
     time_elapsed = (datetime.now()-time_start)
     print "The time it took to render and process frames was " + str(time_elapsed)
@@ -89,7 +99,6 @@ if __name__=="__main__":
     os.remove(legenddir)
     
     # Name of the Time Machine project and the corresponding necessary directories to run Time Machine
-    tmcname = "test2"
     parenttmdir ="./tmc-1.2.1-linux/ct/"+tmcname+ ".tmc"
     tmcimgdir = "./tmc-1.2.1-linux/ct/"+tmcname+ ".tmc/0100-original-images/"
     
@@ -131,9 +140,7 @@ if __name__=="__main__":
         pass
     print('Each rendered image has been overlain onto a basemap and placed into the correct Time Machine input folder.')
 
-    cores = 4
     tmc_ct_dir = "./tmc-1.2.1-linux/ct"
-    
     run_tmachine.runtm(cores, tmcname, tmc_ct_dir, mapxmin, mapxmax, mapymin, mapymax)
     
     time_elapsed = (datetime.now()-time_start)
